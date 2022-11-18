@@ -1,0 +1,97 @@
+#include "main.h"
+
+
+void Delay(uint32_t delay)
+{
+	while(delay--);
+}
+void init_leds()
+{
+	RCC->AHB1ENR = 0x00000008;
+	GPIOD->MODER = 0x41000000;
+	GPIOD->OTYPER = 0x00000000;
+	GPIOD->OSPEEDR = 0xC300000;
+	GPIOD->PUPDR = 0x00000000;
+}
+
+void turn_name_off()
+{
+	GPIOD->ODR &=~ 0x00008000;
+}
+
+void turn_name_on()
+{
+	GPIOD->ODR |= 0x00008000;
+}
+
+void turn_surname_on()
+{
+	GPIOD->ODR |= 0x00001000;
+}
+void turn_surname_off()
+{
+	GPIOD->ODR &=~ 0x00001000;
+}
+
+void System_Conf(void)
+{
+	RCC->CR |= 0x00030000;
+	while(!(RCC->CR & 0x00020000));
+	RCC->CR |= 0x00080000;
+	RCC->PLLCFGR |= 0x00400000;
+	RCC->PLLCFGR |= 0x00000004;
+	RCC->PLLCFGR |= 0x00005A00;
+	RCC->PLLCFGR |= 0x00000000;
+	RCC->CFGR |= 0x00000000;
+	RCC->CFGR |= 0x00080000;
+	RCC->CFGR |= 0x00001400;
+	RCC->CIR |= 0x00800000;
+}
+
+
+int main(void)
+{
+	System_Conf();
+	init_leds();
+	while (1)
+	{
+		turn_name_on();
+		Delay(800000);
+		turn_name_off();
+		Delay(800000);
+		turn_name_on();
+		Delay(800000);
+		turn_name_off();
+		Delay(800000);
+		turn_name_on();
+		Delay(800000);
+		turn_name_off();
+		Delay(800000);
+		turn_name_on();
+		Delay(800000);
+		turn_name_off();
+		Delay(800000);
+		turn_surname_on();
+		Delay(800000);
+		turn_surname_off();
+		Delay(800000);
+		turn_surname_on();
+		Delay(800000);
+		turn_surname_off();
+		Delay(800000);
+		turn_surname_on();
+		Delay(800000);
+		turn_surname_off();
+		Delay(800000);
+		turn_surname_on();
+		Delay(800000);
+		turn_surname_off();
+		Delay(800000);
+		turn_surname_on();
+		Delay(800000);
+		turn_surname_off();
+		Delay(2500000);
+
+	}
+
+}
